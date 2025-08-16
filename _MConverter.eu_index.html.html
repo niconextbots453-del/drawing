@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 7.6.4.1 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="00:00:00"/>
+	<style type="text/css">
+		@page { size: 8.27in 11.69in; margin: 0.79in }
+		p { line-height: 115%; margin-bottom: 0.1in; background: transparent }
+		pre { background: transparent }
+		pre.western { font-family: "Liberation Mono", monospace; font-size: 10pt }
+		pre.cjk { font-family: "NSimSun", monospace; font-size: 10pt }
+		pre.ctl { font-family: "Liberation Mono", monospace; font-size: 10pt }
+	</style>
+</head>
+<body lang="en-US" link="#000080" vlink="#800000" dir="ltr"><pre class="western">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;zh-CN&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;<font face="NSimSun, monospace"><span lang="zh-CN">绘画 </span></font>- huihua.com&lt;/title&gt;
+  &lt;style&gt;
+    body {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #f0f0f0;
+      font-family: Arial, sans-serif;
+    }
+    #toolbar {
+      margin: 10px;
+    }
+    #toolbar button, #toolbar input {
+      margin-right: 10px;
+      padding: 5px 10px;
+      font-size: 14px;
+    }
+    canvas {
+      background: white;
+      border: 2px solid #000;
+      border-radius: 8px;
+      cursor: crosshair;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h2&gt;🎨 <font face="NSimSun, monospace"><span lang="zh-CN">欢迎来到 </span></font>Huihua.com <font face="NSimSun, monospace"><span lang="zh-CN">绘画板</span></font>&lt;/h2&gt;
+  &lt;div id=&quot;toolbar&quot;&gt;
+    &lt;label&gt;<font face="NSimSun, monospace"><span lang="zh-CN">颜色</span></font>: &lt;input type=&quot;color&quot; id=&quot;colorPicker&quot; value=&quot;#000000&quot;&gt;&lt;/label&gt;
+    &lt;label&gt;<font face="NSimSun, monospace"><span lang="zh-CN">画笔大小</span></font>: &lt;input type=&quot;number&quot; id=&quot;sizePicker&quot; value=&quot;5&quot; min=&quot;1&quot; max=&quot;50&quot;&gt;&lt;/label&gt;
+    &lt;button id=&quot;eraser&quot;&gt;<font face="NSimSun, monospace"><span lang="zh-CN">橡皮擦</span></font>&lt;/button&gt;
+    &lt;button id=&quot;clear&quot;&gt;<font face="NSimSun, monospace"><span lang="zh-CN">清除画布</span></font>&lt;/button&gt;
+    &lt;button id=&quot;save&quot;&gt;<font face="NSimSun, monospace"><span lang="zh-CN">保存图片</span></font>&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;canvas id=&quot;canvas&quot; width=&quot;800&quot; height=&quot;600&quot;&gt;&lt;/canvas&gt;
+
+  &lt;script&gt;
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+    let brushColor = document.getElementById('colorPicker').value;
+    let brushSize = document.getElementById('sizePicker').value;
+
+    // <font face="NSimSun, monospace"><span lang="zh-CN">开始绘画</span></font>
+    canvas.addEventListener('mousedown', () =&gt; { drawing = true; });
+    canvas.addEventListener('mouseup', () =&gt; { drawing = false; ctx.beginPath(); });
+    canvas.addEventListener('mousemove', draw);
+
+    function draw(e) {
+      if (!drawing) return;
+      ctx.lineWidth = brushSize;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = brushColor;
+
+      ctx.lineTo(e.offsetX, e.offsetY);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(e.offsetX, e.offsetY);
+    }
+
+    // <font face="NSimSun, monospace"><span lang="zh-CN">工具栏</span></font>
+    document.getElementById('colorPicker').addEventListener('change', e =&gt; {
+      brushColor = e.target.value;
+    });
+
+    document.getElementById('sizePicker').addEventListener('change', e =&gt; {
+      brushSize = e.target.value;
+    });
+
+    document.getElementById('eraser').addEventListener('click', () =&gt; {
+      brushColor = '#ffffff';
+    });
+
+    document.getElementById('clear').addEventListener('click', () =&gt; {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+
+    document.getElementById('save').addEventListener('click', () =&gt; {
+      const link = document.createElement('a');
+      link.download = 'my_drawing.png';
+      link.href = canvas.toDataURL();
+      link.click();
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</body>
+</html>
